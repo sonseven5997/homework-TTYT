@@ -3,7 +3,7 @@ const components = {}
 components.loginScreen  = `
 <div class="login-container">
 <div class="login-form">
-  <div class="login-title">Bệnh viện xyz</div>
+  <div class="login-title">Phần mềm quản lý y tế</div>
   <form id="form-login">
     <div class="input-wrapper">
       <div class="input-title">Tên đăng nhập</div>
@@ -25,7 +25,7 @@ components.loginScreen  = `
 
 components.mainScreen =`
 <div class="main-screen-container">
-<div class="header">Bệnh viện xyz</div>
+<div class="header">Phần mềm quản lý y tế</div>
 <div class="main">
   <div class="aside-left">
     <div class="navigation-wrapper">

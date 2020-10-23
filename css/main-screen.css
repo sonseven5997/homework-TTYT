@@ -88,7 +88,8 @@ table caption {
 
 table tr>th, table tr>td {
   padding: 5px;
-  font-size: 15px;
+  font-size: 12px;
+  word-break: break-word;
 }
 
 .active-equipment {
@@ -97,7 +98,7 @@ table tr>th, table tr>td {
   padding: 3px;
   color: #ffffff;
   border-radius: 5px;
-  font-size: 12px;
+  font-size: 10px;
 }
 
 
@@ -127,7 +128,7 @@ table tr>th, table tr>td {
   padding: 3px;
   color: #ffffff;
   border-radius: 5px;
-  font-size: 12px;
+  font-size: 10px;
 }
 
 .checkbox-wrapper .input-title {

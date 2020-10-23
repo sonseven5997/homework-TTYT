@@ -17,5 +17,7 @@ model.addEquipment = async (equipmentInfo) => {
     image: equipmentInfo.equipmentImage,
     isActive: equipmentInfo.equipmentStatus
   }
-  ultis.postData('https://5f91384ae0559c0016ad7349.mockapi.io/equipment/',dataToCreate)
+  await ultis.postData('https://5f91384ae0559c0016ad7349.mockapi.io/equipment/',dataToCreate)
+  console.log('Equipment added!')
+  location.reload()
 }

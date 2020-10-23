@@ -49,7 +49,7 @@ view.setActiveScreen = async (screenName) => {
           document.getElementById('go-back-btn').addEventListener('click', async () => {
             await view.rerenderEquipmentMainScreen()
           })
-          document.getElementById('add-equipment-btn').addEventListener('click', () => {
+          document.getElementById('add-equipment-btn').addEventListener('click', async () => {
             const equipmentInfo = {
               equipmentName : document.getElementById('equipment-name').value,
               equipmentImage: document.getElementById('equipment-image').value,
@@ -57,6 +57,7 @@ view.setActiveScreen = async (screenName) => {
             }
             console.log(equipmentInfo)
             controller.addEquipment(equipmentInfo)
+            
           })
         })
         await view.renderDataEquipment()
@@ -100,7 +101,7 @@ view.renderDataEquipment = async () => {
     <td>${equipmentData[i].equipmentID}</td>
     <td>${equipmentData[i].equipmentName}</td>
     <td>${equipmentData[i].date}</td>
-    <td>${equipmentData[i].image}</td>
+    <td><img src="${equipmentData[i].image}" alt="Thiết bị" width="50px" height="50px"></td>
     <td>${equipmentData[i].isActive ? `<div class="active-equipment">Hoạt động</div>` : `<div class="inactive-equipment">Không hoạt động</div>`}</td>
     <td>
       <div class="button-wrapper">
@@ -129,7 +130,7 @@ view.renderDataEquipment = async () => {
         const equipmentInfo = {
           equipmentName : document.getElementById('equipment-name').value,
           date: new Date(),
-          equipmentImage: document.getElementById('equipment-image').value,
+          image: document.getElementById('equipment-image').value,
           isActive: document.getElementById('status').checked
         }
         await ultis.putData(equipmentData[i].equipmentID,'equipment',equipmentInfo)
