@@ -1,36 +1,60 @@
-const ultis = {}
+const ultis = {};
 
 ultis.fetchData = async (endpoint) => {
-  const api = await fetch(`https://5f91384ae0559c0016ad7349.mockapi.io/${endpoint}`,{
-    mode: 'cors'
-  })
-  const data = await api.json()
-  console.log(data)
-  return data
-}
+  const api = await fetch(
+    `https://floating-eyrie-61483.herokuapp.com/api/${endpoint}`,
+    {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    }
+  );
+  const data = await api.json();
+  console.log(data);
+  return data;
+};
 
-ultis.postData = async (url,data) => {
-  await fetch(url,
-  {method:'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(data),
-  })
-}
-
-ultis.deleteData = async (id,endpoint) => {
-  await fetch(`https://5f91384ae0559c0016ad7349.mockapi.io/${endpoint}/${id}`,{
-    method:'delete'
-  })
-}
-
-ultis.putData = async (id,endpoint,data) => {
-  await fetch(`https://5f91384ae0559c0016ad7349.mockapi.io/${endpoint}/${id}`,{
-    method:'PUT',
+ultis.postData = async (url, data) => {
+  const api = await fetch(url, {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
   })
-}
+  const dataToCheck = await api.json()
+  console.log(dataToCheck)
+  return dataToCheck
+};
+
+ultis.deleteData = async (id, endpoint) => {
+  await fetch(
+    `https://floating-eyrie-61483.herokuapp.com/api/${endpoint}/${id}`,
+    {
+      method: "delete",
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    }
+  );
+};
+
+ultis.putData = async (id, endpoint, data) => {
+  await fetch(
+    `https://floating-eyrie-61483.herokuapp.com/api/${endpoint}/${id}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        origin: `https://floating-eyrie-61483.herokuapp.com/api/${endpoint}/${id}`,
+      },
+      body: JSON.stringify(data),
+    }
+  );
+};
+
+ultis.convertDate = (date) => {
+  return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+};

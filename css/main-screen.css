@@ -1,7 +1,8 @@
-*{
+* {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;  
+  font-family: sans-serif;
+  font-size: 12px;
 }
 
 .main-screen-container {
@@ -29,12 +30,11 @@
 }
 
 .main-screen-container .main .aside-left {
-  width: 200px;
+  flex-grow: 1;
   border-right: solid 1px #dbdbdb;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  
 }
 
 .aside-left-element {
@@ -53,7 +53,9 @@
   background-color: #dbdbdb;
 }
 
-table, th, td {
+table,
+th,
+td {
   border: 1px solid #dbdbdb;
   border-collapse: collapse;
 }
@@ -64,10 +66,11 @@ table {
 
 .aside-right {
   padding: 20px;
-  flex-grow: 1;
+  flex-grow: 10;
 }
 
-#add-equipment {
+#add-equipment,
+#add-user {
   width: 125px;
   height: 40px;
   border-radius: 5px;
@@ -85,8 +88,8 @@ table caption {
   font-weight: bold;
 }
 
-
-table tr>th, table tr>td {
+table tr > th,
+table tr > td {
   padding: 5px;
   font-size: 12px;
   word-break: break-word;
@@ -100,7 +103,6 @@ table tr>th, table tr>td {
   border-radius: 5px;
   font-size: 10px;
 }
-
 
 #edit-btn {
   width: 60px;
@@ -137,7 +139,9 @@ table tr>th, table tr>td {
   margin-bottom: 5px;
 }
 
-#form-add-equipment > .input-wrapper > input {
+#form-add-equipment > .input-wrapper > input,
+#form-add-user > .input-wrapper > input,
+#form-create-maintain > .input-wrapper > input {
   width: 50%;
 }
 
@@ -147,13 +151,21 @@ table tr>th, table tr>td {
   margin-top: 5px;
 }
 
-.button-wrapper-add-equipment-screen, .button-wrapper-edit-equipment-screen {
+.button-wrapper-add-equipment-screen,
+.button-wrapper-edit-equipment-screen,
+.button-wrapper-add-user-screen,
+.button-wrapper-edit-user-screen,
+.create-maintain-schedule-wrapper {
   display: flex;
   justify-content: flex-start;
   margin-top: 5px;
 }
 
-#add-equipment-btn, #edit-equipment-btn {
+#add-equipment-btn,
+#edit-equipment-btn,
+#add-user-btn,
+#edit-user-btn,
+#create-maintain-schedule-btn {
   width: 60px;
   height: 35px;
   color: #ffffff;
@@ -172,4 +184,10 @@ table tr>th, table tr>td {
   border: solid 1px #dbdbdb;
   border-radius: 5px;
   font-size: 12px;
+}
+
+#role-label {
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
