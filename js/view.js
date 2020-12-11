@@ -23,12 +23,13 @@ view.setActiveScreen = async (screenName) => {
       const equipment = document.getElementById("equipment");
       const user = document.getElementById("user");
       const logOutBtn = document.querySelector(".log-out");
-      const maintain = document.getElementById('maintain')
-      const history = document.getElementById('history')
+      const maintain = document.getElementById("maintain");
+      const history = document.getElementById("history");
+      const department = document.getElementById('department')
       logOutBtn.addEventListener("click", () => {
         sessionStorage.setItem("isLoggedIn", "false");
-        sessionStorage.removeItem('currentUser')
-        sessionStorage.removeItem('currentRole')
+        sessionStorage.removeItem("currentUser");
+        sessionStorage.removeItem("currentRole");
         view.setActiveScreen("loginScreen");
       });
       document.querySelector(".aside-right").innerHTML =
@@ -45,7 +46,11 @@ view.setActiveScreen = async (screenName) => {
           .getElementById("add-equipment-btn")
           .addEventListener("click", async () => {
             const equipmentInfo = {
-              equipmentID: model.dataEquipment.length !== 0 ? (model.dataEquipment[model.dataEquipment.length - 1].equipmentID + 1) : 1,
+              id:
+                model.dataEquipment.length !== 0
+                  ? model.dataEquipment[model.dataEquipment.length - 1]
+                      .id + 1
+                  : 1,
               equipmentName: document.getElementById("equipment-name").value,
               equipmentSerialNumber: document.getElementById(
                 "equipment-serial-number"
@@ -89,7 +94,11 @@ view.setActiveScreen = async (screenName) => {
               .getElementById("add-equipment-btn")
               .addEventListener("click", async () => {
                 const equipmentInfo = {
-                  equipmentID: model.dataEquipment.length !== 0 ? (model.dataEquipment[model.dataEquipment.length - 1].equipmentID + 1) : 1,
+                  id:
+                    model.dataEquipment.length !== 0
+                      ? model.dataEquipment[model.dataEquipment.length - 1]
+                          .id + 1
+                      : 1,
                   equipmentName: document.getElementById("equipment-name")
                     .value,
                   equipmentSerialNumber: document.getElementById(
@@ -122,7 +131,8 @@ view.setActiveScreen = async (screenName) => {
         user.classList.add("choosen");
         document.querySelector(".aside-right").innerHTML =
           components.userMainScreen;
-        document.getElementById('add-user').disabled = sessionStorage.getItem('currentRole') == 'Quản lý' ?  false : true
+        document.getElementById("add-user").disabled =
+          sessionStorage.getItem("currentRole") == "Quản lý" ? false : true;
         document.getElementById("add-user").addEventListener("click", () => {
           document.querySelector(".aside-right").innerHTML =
             components.addUserScreen;
@@ -135,7 +145,10 @@ view.setActiveScreen = async (screenName) => {
             .getElementById("add-user-btn")
             .addEventListener("click", async () => {
               const userInfo = {
-                userID: model.dataUser.length == 0 ? 1 : (model.dataUser[model.dataUser.length - 1].userID + 1),
+                userID:
+                  model.dataUser.length == 0
+                    ? 1
+                    : model.dataUser[model.dataUser.length - 1].userID + 1,
                 userLoginId: document.getElementById("user-login-id").value,
                 userPassword: document.getElementById("user-password").value,
                 userName: document.getElementById("user-name").value,
@@ -147,47 +160,83 @@ view.setActiveScreen = async (screenName) => {
         });
         view.renderDataUser();
       });
-      maintain.addEventListener('click', async () => {
-        view.currenScreen = 'maintain'
+      department.addEventListener("click", async () => {
+        view.currenScreen = "department";
+        document.querySelector(".choosen").classList.remove("choosen");
+        department.classList.add("choosen");
+        document.querySelector(".aside-right").innerHTML =
+          components.departmentMainScreen;
+        document.getElementById("add-department").disabled =
+          sessionStorage.getItem("currentRole") == "Quản lý" ? false : true;
+        document.getElementById("add-department").addEventListener("click", () => {
+          document.querySelector(".aside-right").innerHTML =
+            components.addDepartmentScreen;
+          document
+            .getElementById("go-back-btn")
+            .addEventListener("click", async () => {
+              await view.rerenderDepartmentMainScreen();
+            });
+          document
+            .getElementById("add-department-btn")
+            .addEventListener("click", async () => {
+              const departmentInfo = {
+                departmentID:
+                  model.datadepartment.length == 0
+                    ? 1
+                    : model.datadepartment[model.datadepartment.length - 1].departmentID + 1,
+                departmentLoginId: document.getElementById("department-login-id").value,
+                departmentPassword: document.getElementById("department-password").value,
+                departmentName: document.getElementById("department-name").value,
+                departmentRole: document.getElementById("department-role").value,
+              };
+              console.log(departmentInfo);
+              await controller.adddepartment(departmentInfo);
+            });
+        });
+        view.renderDatadepartment();
+      });
+      maintain.addEventListener("click", async () => {
+        view.currenScreen = "maintain";
         document.querySelector(".choosen").classList.remove("choosen");
         maintain.classList.add("choosen");
         document.querySelector(".aside-right").innerHTML =
           components.maintainScreen;
-        document.getElementById('form-create-maintain').addEventListener('submit', async (e) =>{
-          e.preventDefault()
-          const maintainInfo = {
-            deviceId: document.getElementById('equipment-id').value,
-            time: document.getElementById('equipment-maintain-time').value
-          }
-          await controller.createMaintain(maintainInfo)
-          document.getElementById('equipment-id').value = ''
-          document.getElementById('equipment-maintain-time').value = ''
-        })        
-      })
-      history.addEventListener('click',async () => {
-        view.currenScreen = 'history'
+        document
+          .getElementById("form-create-maintain")
+          .addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const maintainInfo = {
+              deviceId: document.getElementById("equipment-id").value,
+              time: document.getElementById("equipment-maintain-time").value,
+            };
+            await controller.createMaintain(maintainInfo);
+            document.getElementById("equipment-id").value = "";
+            document.getElementById("equipment-maintain-time").value = "";
+          });
+      });
+      history.addEventListener("click", async () => {
+        view.currenScreen = "history";
         document.querySelector(".choosen").classList.remove("choosen");
         history.classList.add("choosen");
         document.querySelector(".aside-right").innerHTML =
           components.historyScreen;
-        model.dataMaintain = await ultis.fetchData('maintains')
-        for(let i=0; i<model.dataMaintain.length; i++) {
-          if (model.dataMaintain[i] !== undefined){
-            const tableRow = document.createElement('tr')
+        model.dataMaintain = await ultis.fetchData("maintains");
+        for (let i = 0; i < model.dataMaintain.length; i++) {
+          if (model.dataMaintain[i] !== undefined) {
+            const tableRow = document.createElement("tr");
             tableRow.innerHTML = `
-            <td>${i+1}</td>
+            <td>${i + 1}</td>
             <td>${model.dataMaintain[i].deviceId}</td>
             <td>${model.dataMaintain[i].time}</td>
             <td>${model.dataMaintain[i].created}</td>
             <td>${model.dataMaintain[i].createdBy}</td>
             <td>${model.dataMaintain[i].updated}</td>
             <td>${model.dataMaintain[i].updatedBy}</td>
-            `
+            `;
             document.querySelector(".data-table").appendChild(tableRow);
           }
-          
         }
-      })
+      });
       break;
   }
 };
@@ -206,39 +255,41 @@ view.rerenderEquipmentMainScreen = async () => {
       e.preventDefault();
       view.rerenderEquipmentMainScreen();
     });
-    document.getElementById('add-equipment-btn').addEventListener('click', async () => {
-      const equipmentInfo = {
-        equipmentID: model.dataEquipment.length !== 0 ? (model.dataEquipment[model.dataEquipment.length - 1].equipmentID + 1) : 1,
-        equipmentName: document.getElementById("equipment-name")
-          .value,
-        equipmentSerialNumber: document.getElementById(
-          "equipment-serial-number"
-        ).value,
-        equipmentModel: document.getElementById("equipment-model")
-          .value,
-        equipmentOrigin: document.getElementById("equipment-origin")
-          .value,
-        equipmentManufacturer: document.getElementById(
-          "equipment-manufacturer"
-        ).value,
-        equipmentManufactureYear: document.getElementById(
-          "equipment-manufacture-year"
-        ).value,
-        equipmentFacultyUse: document.getElementById(
-          "equipment-faculty-use"
-        ).value,
-        equipmentIsActive: document.getElementById("status").checked,
-      };
-      console.log(equipmentInfo);
-      await controller.addEquipment(equipmentInfo);
-    })
+    document
+      .getElementById("add-equipment-btn")
+      .addEventListener("click", async () => {
+        const equipmentInfo = {
+          id:
+            model.dataEquipment.length !== 0
+              ? model.dataEquipment[model.dataEquipment.length - 1]
+                  .id + 1
+              : 1,
+          equipmentName: document.getElementById("equipment-name").value,
+          equipmentSerialNumber: document.getElementById(
+            "equipment-serial-number"
+          ).value,
+          equipmentModel: document.getElementById("equipment-model").value,
+          equipmentOrigin: document.getElementById("equipment-origin").value,
+          equipmentManufacturer: document.getElementById(
+            "equipment-manufacturer"
+          ).value,
+          equipmentManufactureYear: document.getElementById(
+            "equipment-manufacture-year"
+          ).value,
+          equipmentFacultyUse: document.getElementById("equipment-faculty-use")
+            .value,
+          equipmentIsActive: document.getElementById("status").checked,
+        };
+        console.log(equipmentInfo);
+        await controller.addEquipment(equipmentInfo);
+      });
   });
   await view.renderDataEquipment();
 };
 
 view.renderDataEquipment = async () => {
   for (let i = 0; i < model.dataEquipment.length; i++) {
-    if (model.dataEquipment[i] !== undefined){
+    if (model.dataEquipment[i] !== undefined) {
       const tableRow = document.createElement("tr");
       tableRow.innerHTML = `
       <td>${i + 1}</td>
@@ -269,16 +320,16 @@ view.renderDataEquipment = async () => {
     }
   }
   for (let i = 0; i < model.dataEquipment.length; i++) {
-    if (model.dataEquipment[i] !== undefined){
+    if (model.dataEquipment[i] !== undefined) {
       document
         .querySelector(`.delete-btn-${i}`)
         .addEventListener("click", async () => {
           await ultis.deleteData(
-            model.dataEquipment[i].equipmentID,
+            model.dataEquipment[i].id,
             "equipments"
           );
           console.log("Deleted!");
-          model.dataEquipment = await ultis.fetchData('equipments')
+          model.dataEquipment = await ultis.fetchData("equipments");
           await view.rerenderEquipmentMainScreen();
         });
       document.querySelector(`.edit-btn-${i}`).addEventListener("click", () => {
@@ -309,13 +360,14 @@ view.renderDataEquipment = async () => {
           .getElementById("edit-equipment-btn")
           .addEventListener("click", async () => {
             const equipmentInfo = {
-              equipmentID: model.dataEquipment[i].equipmentID,
+              id: model.dataEquipment[i].id,
               equipmentName: document.getElementById("equipment-name").value,
               equipmentSerialNumber: document.getElementById(
                 "equipment-serial-number"
               ).value,
               equipmentModel: document.getElementById("equipment-model").value,
-              equipmentOrigin: document.getElementById("equipment-origin").value,
+              equipmentOrigin: document.getElementById("equipment-origin")
+                .value,
               equipmentManufacturer: document.getElementById(
                 "equipment-manufacturer"
               ).value,
@@ -327,7 +379,7 @@ view.renderDataEquipment = async () => {
               ).value,
               equipmentIsActive: document.getElementById("status").checked,
               equipmentCreatedTime: model.dataEquipment[i].equipmentCreatedTime,
-              equipmentCreatedBy: model.dataEquipment[i].equipmentCreatedBy
+              equipmentCreatedBy: model.dataEquipment[i].equipmentCreatedBy,
             };
             await controller.editEquipment(equipmentInfo);
             await view.rerenderEquipmentMainScreen();
@@ -339,7 +391,8 @@ view.renderDataEquipment = async () => {
 
 view.rerenderUserMainScreen = async () => {
   document.querySelector(".aside-right").innerHTML = components.userMainScreen;
-  document.getElementById('add-user').disabled = sessionStorage.getItem('currentRole') == 'Quản lý' ?  false : true
+  document.getElementById("add-user").disabled =
+    sessionStorage.getItem("currentRole") == "Quản lý" ? false : true;
   document.getElementById("add-user").addEventListener("click", () => {
     document.querySelector(".aside-right").innerHTML = components.addUserScreen;
     document.getElementById("go-back-btn").addEventListener("click", (e) => {
@@ -347,18 +400,21 @@ view.rerenderUserMainScreen = async () => {
       view.rerenderUserMainScreen();
     });
     document
-    .getElementById("add-user-btn")
-    .addEventListener("click", async () => {
-      const userInfo = {
-        userID: model.dataUser.length == 0 ? 1 : (model.dataUser[model.dataUser.length - 1].userID + 1),
-        userLoginId: document.getElementById("user-login-id").value,
-        userPassword: document.getElementById("user-password").value,
-        userName: document.getElementById("user-name").value,
-        userRole: document.getElementById("user-role").value,
-      };
-      console.log(userInfo);
-      await controller.addUser(userInfo);
-    });
+      .getElementById("add-user-btn")
+      .addEventListener("click", async () => {
+        const userInfo = {
+          userID:
+            model.dataUser.length == 0
+              ? 1
+              : model.dataUser[model.dataUser.length - 1].userID + 1,
+          userLoginId: document.getElementById("user-login-id").value,
+          userPassword: document.getElementById("user-password").value,
+          userName: document.getElementById("user-name").value,
+          userRole: document.getElementById("user-role").value,
+        };
+        console.log(userInfo);
+        await controller.addUser(userInfo);
+      });
   });
   await view.renderDataUser();
 };
@@ -370,7 +426,11 @@ view.renderDataUser = async () => {
     <td>${i + 1}</td>
     <td>${model.dataUser[i].userName}</td>
     <td>${model.dataUser[i].userLoginId}</td>
-    <td>${model.dataUser[i].userPassword}</td>
+    <td>${
+      sessionStorage.getItem("currentRole") == "Quản lý"
+        ? model.dataUser[i].userPassword
+        : "****"
+    }</td>
     <td>${model.dataUser[i].userRole}</td>
     <td>${model.dataUser[i].userCreatedTime}</td>
     <td>${model.dataUser[i].userCreatedBy}</td>
@@ -378,13 +438,16 @@ view.renderDataUser = async () => {
     <td>${model.dataUser[i].userUpdatedBy}</td>
     <td>
       <div class="button-wrapper">
-        <button id="edit-btn" class="edit-btn-${i}" ${sessionStorage.getItem('currentRole') == 'Quản lý' ? '' : 'disabled'}>Sửa</button>
-        <button id="delete-btn" class="delete-btn-${i}" ${sessionStorage.getItem('currentRole') == 'Quản lý' ? '' : 'disabled'}>Xoá</button>
+        <button id="edit-btn" class="edit-btn-${i}" ${
+      sessionStorage.getItem("currentRole") == "Quản lý" ? "" : "disabled"
+    }>Sửa</button>
+        <button id="delete-btn" class="delete-btn-${i}" ${
+      sessionStorage.getItem("currentRole") == "Quản lý" ? "" : "disabled"
+    }>Xoá</button>
       </div>
     </td>
     `;
     document.querySelector(".data-table").appendChild(tableRow);
-
   }
   for (let i = 0; i < model.dataUser.length; i++) {
     document
@@ -395,40 +458,45 @@ view.renderDataUser = async () => {
         model.dataEquipment.splice(i, 1);
         view.rerenderUserMainScreen();
       });
-    document.querySelector(`.edit-btn-${i}`).addEventListener("click", async  () => {
-      document.querySelector(".aside-right").innerHTML =
-        components.editUserScreen;
-      document.getElementById("user-login-id").value =
-        model.dataUser[i].userLoginId;
-      document.getElementById("user-password").value =
-        model.dataUser[i].userPassword;
-      document.getElementById("user-name").value = model.dataUser[i].userName;
-      document.getElementById("user-login-id").value =
-        model.dataUser[i].userLoginId;
-      document.getElementById("user-role").value = model.dataUser[i].userRole;
-      document
-        .getElementById("go-back-btn")
-        .addEventListener("click", async () => {
-          await view.rerenderUserMainScreen();
-        });
-      document
-        .getElementById("edit-user-btn")
-        .addEventListener("click", async () => {
-          const userInfo = {
-            userID: model.dataUser.length == 0 ? 1 : (model.dataUser[model.dataUser.length - 1].userID + 1),
-            userLoginId: document.getElementById("user-login-id").value,
-            userPassword: document.getElementById("user-password").value,
-            userName: document.getElementById("user-name").value,
-            userRole: document.getElementById("user-role").value,
-            userCreatedTime: model.dataUser[i].userCreatedTime,
-            userCreatedBy: model.dataUser[i].userCreatedBy,
-            userUpdatedTime: new Date(),
-            userUpdatedBy: sessionStorage.getItem('currentUser'),
-          };
-          await ultis.putData(model.dataUser[i].userID, "users", userInfo);
-          model.dataUser = await ultis.fetchData('users');
-          await view.rerenderUserMainScreen();
-        });
-    });
+    document
+      .querySelector(`.edit-btn-${i}`)
+      .addEventListener("click", async () => {
+        document.querySelector(".aside-right").innerHTML =
+          components.editUserScreen;
+        document.getElementById("user-login-id").value =
+          model.dataUser[i].userLoginId;
+        document.getElementById("user-password").value =
+          model.dataUser[i].userPassword;
+        document.getElementById("user-name").value = model.dataUser[i].userName;
+        document.getElementById("user-login-id").value =
+          model.dataUser[i].userLoginId;
+        document.getElementById("user-role").value = model.dataUser[i].userRole;
+        document
+          .getElementById("go-back-btn")
+          .addEventListener("click", async () => {
+            await view.rerenderUserMainScreen();
+          });
+        document
+          .getElementById("edit-user-btn")
+          .addEventListener("click", async () => {
+            const userInfo = {
+              userID:
+                model.dataUser.length == 0
+                  ? 1
+                  : model.dataUser[model.dataUser.length - 1].userID + 1,
+              userLoginId: document.getElementById("user-login-id").value,
+              userPassword: document.getElementById("user-password").value,
+              userName: document.getElementById("user-name").value,
+              userRole: document.getElementById("user-role").value,
+              userCreatedTime: model.dataUser[i].userCreatedTime,
+              userCreatedBy: model.dataUser[i].userCreatedBy,
+              userUpdatedTime: new Date(),
+              userUpdatedBy: sessionStorage.getItem("currentUser"),
+            };
+            await ultis.putData(model.dataUser[i].userID, "users", userInfo);
+            model.dataUser = await ultis.fetchData("users");
+            await view.rerenderUserMainScreen();
+          });
+      });
   }
 };

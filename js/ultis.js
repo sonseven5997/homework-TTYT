@@ -22,10 +22,10 @@ ultis.postData = async (url, data) => {
       "Access-Control-Allow-Origin": "*",
     },
     body: JSON.stringify(data),
-  })
-  const dataToCheck = await api.json()
-  console.log(dataToCheck)
-  return dataToCheck
+  });
+  const dataToCheck = await api.json();
+  console.log(dataToCheck);
+  return dataToCheck;
 };
 
 ultis.deleteData = async (id, endpoint) => {

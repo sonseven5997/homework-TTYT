@@ -31,6 +31,7 @@ components.mainScreen = `
     <div class="navigation-wrapper">
       <div class="aside-left-element choosen" id="equipment">Danh sách thiết bị</div>
       <div class="aside-left-element" id="user">Danh sách nhân viên</div>
+      <div class="aside-left-element" id="department">Danh sách phòng ban</div>
       <div class="aside-left-element" id="maintain">Bảo trì</div>
       <div class="aside-left-element" id="history">Lịch sử</div>
     </div>
@@ -264,7 +265,7 @@ components.maintainScreen = `
   </div>
 </form>
 <div class="maintain-content"></div>
-`
+`;
 
 components.historyScreen = `
 <table class="data-table">
@@ -279,4 +280,54 @@ components.historyScreen = `
     <th>Người cập nhật</th>
   </tr>
 </table>
-`
+`;
+
+components.departmentMainScreen = `
+<button id="add-department">Thêm phòng ban</button>
+<table class="data-table">
+  <caption>Danh sách phòng ban</caption>
+  <tr>
+    <th >STT</th>
+    <th>Tên nhân viên</th>
+    <th>Tên đăng nhập</th>
+    <th>Mật khẩu</th>
+    <th>Chức vụ</th>
+    <th>Thời gian tạo</th>
+    <th>Người tạo</th>
+    <th>Thời gian cập nhật</th>
+    <th>Người cập nhật</th>
+    <th>Hành động</th>
+  </tr>
+</table>
+`;
+components.adddepartmentScreen = `
+<form id="form-add-equipment">
+    <div class="input-wrapper">
+      <div class="input-title">Tên đăng nhập</div>
+      <input type="text" id="department-login-id">
+      <div class="input-error" id="department-login-id-error-1"></div>
+      <div class="input-error" id="department-login-id-error-2"></div>
+    </div>
+    <div class="input-wrapper">
+      <div class="input-title">Mật khẩu</div>
+      <input type="text" id="department-password">
+      <div class="input-error" id="department-password-error"></div>
+    </div>
+    <div class="input-wrapper">
+      <div class="input-title">Tên nhân viên</div>
+      <input type="text" id="department-name">
+      <div class="input-error" id="department-name-error"></div>
+    </div>
+    <div class="select-box-wrapper" style="margin-bottom:5px">
+      <label for="role" id="role-label">Chức vụ</label>
+      <select name="role" id="department-role">
+        <option value="Nhân viên">Nhân viên</option>
+        <option value="Quản lý">Quản lý</option>
+      </select>
+    </div>
+</form>
+  <div class="button-wrapper-add-department-screen">
+    <button id="add-department-btn">Lưu</button>
+    <button id="go-back-btn">Trở lại</button>
+  </div>
+`;

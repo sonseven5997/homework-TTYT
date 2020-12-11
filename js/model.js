@@ -3,22 +3,25 @@ model.dataUser = undefined;
 model.dataEquipment = undefined;
 model.currentUser = undefined;
 model.currentRole = undefined;
-model.dataMaintain = undefined
+model.dataMaintain = undefined;
 model.login = async (loginInfo) => {
   const dataToLogin = {
     userLoginId: loginInfo.username,
-    userPassword: loginInfo.password
-  }
-  const response = await ultis.postData('https://floating-eyrie-61483.herokuapp.com/api/users/login',dataToLogin)
-  console.log(response)
+    userPassword: loginInfo.password,
+  };
+  const response = await ultis.postData(
+    "https://floating-eyrie-61483.herokuapp.com/api/users/login",
+    dataToLogin
+  );
+  console.log(response);
   if (response.userLoginId !== null) {
     //alert('Đăng nhập thành công!')
     sessionStorage.setItem("isLoggedIn", true);
     view.setActiveScreen("mainScreen");
     model.currentUser = response.userLoginId;
-    sessionStorage.setItem('currentUser',model.currentUser)
-    model.currentRole = response.userRole
-    sessionStorage.setItem('currentRole',model.currentRole)
+    sessionStorage.setItem("currentUser", model.currentUser);
+    model.currentRole = response.userRole;
+    sessionStorage.setItem("currentRole", model.currentRole);
   } else {
     alert("Tên đăng nhập hoặc mật khẩu không đúng!");
   }
@@ -26,7 +29,7 @@ model.login = async (loginInfo) => {
 
 model.addEquipment = async (equipmentInfo) => {
   const dataToCreate = {
-    equipmentID: equipmentInfo.equipmentID,
+    id: equipmentInfo.id,
     equipmentName: equipmentInfo.equipmentName,
     equipmentSerialNumber: equipmentInfo.equipmentSerialNumber,
     equipmentModel: equipmentInfo.equipmentModel,
@@ -36,7 +39,7 @@ model.addEquipment = async (equipmentInfo) => {
     equipmentFacultyUse: equipmentInfo.equipmentFacultyUse,
     equipmentIsActive: equipmentInfo.equipmentIsActive,
     equipmentCreatedTime: new Date(),
-    equipmentCreatedBy: sessionStorage.getItem('currentUser'),
+    equipmentCreatedBy: sessionStorage.getItem("currentUser"),
     equipmentUpdatedTime: null,
     equipmentUpdatedBy: null,
   };
@@ -57,7 +60,7 @@ model.addUser = async (userInfo) => {
     userName: userInfo.userName,
     userRole: userInfo.userRole,
     userCreatedTime: new Date(),
-    userCreatedBy: sessionStorage.getItem('currentUser'),
+    userCreatedBy: sessionStorage.getItem("currentUser"),
     userUpdatedTime: null,
     userUpdatedBy: null,
   };
@@ -72,7 +75,7 @@ model.addUser = async (userInfo) => {
 
 model.editEquipment = async (equipmentInfo) => {
   const dataToEdit = {
-    equipmentID: equipmentInfo.equipmentID,
+    id: equipmentInfo.id,
     equipmentName: equipmentInfo.equipmentName,
     equipmentSerialNumber: equipmentInfo.equipmentSerialNumber,
     equipmentModel: equipmentInfo.equipmentModel,
@@ -84,11 +87,11 @@ model.editEquipment = async (equipmentInfo) => {
     equipmentCreatedTime: equipmentInfo.equipmentCreatedTime,
     equipmentCreatedBy: equipmentInfo.equipmentCreatedBy,
     equipmentUpdatedTime: new Date(),
-    equipmentUpdatedBy: sessionStorage.getItem('currentUser'),
+    equipmentUpdatedBy: sessionStorage.getItem("currentUser"),
   };
-  console.log(dataToEdit)
-  await ultis.putData(equipmentInfo.equipmentID, "equipments", dataToEdit);
-  model.dataEquipment = await ultis.fetchData('equipments');
+  console.log(dataToEdit);
+  await ultis.putData(equipmentInfo.id, "equipments", dataToEdit);
+  model.dataEquipment = await ultis.fetchData("equipments");
 };
 
 model.createMaintain = async (maintainInfo) => {
@@ -96,9 +99,12 @@ model.createMaintain = async (maintainInfo) => {
     deviceId: maintainInfo.deviceId,
     time: maintainInfo.time,
     created: new Date(),
-    createdBy: sessionStorage.getItem('currentUser'),
+    createdBy: sessionStorage.getItem("currentUser"),
     updated: null,
-    updatedBy: null
-  }
-  await ultis.postData('https://floating-eyrie-61483.herokuapp.com/api/maintains',dataToCreate)
-}
+    updatedBy: null,
+  };
+  await ultis.postData(
+    "https://floating-eyrie-61483.herokuapp.com/api/maintains",
+    dataToCreate
+  );
+};

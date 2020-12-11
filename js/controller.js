@@ -140,9 +140,24 @@ controller.editEquipment = async (equipmentInfo) => {
 };
 
 controller.createMaintain = async (maintainInfo) => {
-  view.setErrorMessage('equipment-id-error', model.dataEquipment.find(element => element.equipmentID == maintainInfo.deviceId) == undefined ? 'Bạn đã nhập sai ID thiết bị' : '')
-  view.setErrorMessage('equipment-maintain-time', maintainInfo.time == '' ? 'Bạn hãy nhập thời gian bảo dưỡng' : '')
-  if (model.dataEquipment.find(element => element.equipmentID == maintainInfo.deviceId) !== undefined && maintainInfo.time !== ''){
-    await model.createMaintain(maintainInfo)
+  view.setErrorMessage(
+    "equipment-id-error",
+    model.dataEquipment.find(
+      (element) => element.id == maintainInfo.deviceId
+    ) == undefined
+      ? "Bạn đã nhập sai ID thiết bị"
+      : ""
+  );
+  view.setErrorMessage(
+    "equipment-maintain-time",
+    maintainInfo.time == "" ? "Bạn hãy nhập thời gian bảo dưỡng" : ""
+  );
+  if (
+    model.dataEquipment.find(
+      (element) => element.id == maintainInfo.deviceId
+    ) !== undefined &&
+    maintainInfo.time !== ""
+  ) {
+    await model.createMaintain(maintainInfo);
   }
-}
+};

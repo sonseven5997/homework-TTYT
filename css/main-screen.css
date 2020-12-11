@@ -26,11 +26,11 @@
 .main-screen-container .main {
   display: flex;
   flex-direction: row;
-  flex-grow: 1;
+  flex: 1;
 }
 
 .main-screen-container .main .aside-left {
-  flex-grow: 1;
+  flex: 1;
   border-right: solid 1px #dbdbdb;
   display: flex;
   justify-content: space-between;
@@ -38,7 +38,7 @@
 }
 
 .aside-left-element {
-  padding: 20px;
+  padding: 10px;
   cursor: pointer;
   border-bottom: solid 1px #dbdbdb;
 }
@@ -66,11 +66,11 @@ table {
 
 .aside-right {
   padding: 20px;
-  flex-grow: 10;
+  flex: 10;
 }
 
 #add-equipment,
-#add-user {
+#add-user, #add-department {
   width: 125px;
   height: 40px;
   border-radius: 5px;
